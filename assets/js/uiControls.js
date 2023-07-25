@@ -45,18 +45,18 @@ const uiControls = {
       resetBtn.classList.add('ripple')
       location.reload()
     })
-    infoBtn.addEventListener('click', (e) => {
-      modal.style.display = 'block'
-      infoBtn.classList.add('active')
-      infoBtn.classList.add('ripple')
-    })
+    // infoBtn.addEventListener('click', (e) => {
+    //   modal.style.display = 'block'
+    //   infoBtn.classList.add('active')
+    //   infoBtn.classList.add('ripple')
+    // })
 
-    // Add event listener to close the modal
-    closeBtn.addEventListener('click', (e) => {
-      infoBtn.classList.remove('active')
-      infoBtn.classList.remove('ripple')
-      modal.style.display = 'none'
-    })
+    // // Add event listener to close the modal
+    // closeBtn.addEventListener('click', (e) => {
+    //   infoBtn.classList.remove('active')
+    //   infoBtn.classList.remove('ripple')
+    //   modal.style.display = 'none'
+    // })
   },
 }
 export { uiControls }

@@ -4,7 +4,7 @@ import {
   spinComponent,
   promptFlowComponent,
 } from '~/assets/js/portal.js'
-import { imageTargetPortalComponent } from '~/assets/js/imagePortal'
+
 import { loadingComponent } from '~/assets/js/loading'
 import { uiControls } from '~/assets/js/uiControls'
 import { rotateComponent } from '~/assets/js/rotate'
@@ -25,7 +25,6 @@ AFRAME.registerComponent('auto-play-video', {
   },
 })
 
-AFRAME.registerComponent('image-target-portal', imageTargetPortalComponent())
 AFRAME.registerComponent('loading', loadingComponent)
 AFRAME.registerComponent('ui-controls', uiControls)
 

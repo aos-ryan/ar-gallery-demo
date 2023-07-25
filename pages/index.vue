@@ -1,11 +1,6 @@
 <template>
   <main>
-    <NuxtLink class="button" to="/world-portal"
-      >World Tracking Portal Demo</NuxtLink
-    >
-    <NuxtLink class="button" to="/image-portal"
-      >Image Targeting Portal Demo</NuxtLink
-    >
+    <NuxtLink class="button" to="/world-portal">Begin</NuxtLink>
   </main>
 </template>
 
