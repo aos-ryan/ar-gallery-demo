@@ -4,6 +4,8 @@
     <div id="overlay" class="absolute-fill">
       <span id="promptText"></span>
     </div>
+    <!-- Info Modal -->
+    <InfoModal v-if="bgFade" />
 
     <!-- Scene -->
     <a-scene
@@ -27,18 +29,27 @@
       </a-assets>
 
       <!-- Camera -->
-      <a-camera id="camera" position="0 9 9" portal-camera fov="90">
+      <a-camera id="camera" position="0 9 9" portal-camera>
         <a-entity
-          raycaster="objects: .collidable; showLine: true; far: 5"
-          collider-check
+          raycaster="objects: .cantap"
+          cursor="fuse: false; rayOrigin: mouse;"
         >
         </a-entity>
+        <!-- Plane that blocks the scene -->
+        <a-plane
+          v-if="bgFade"
+          height="1"
+          width="1"
+          position="0 0 -3"
+          material="shader: flat; transparent: true; opacity: 1"
+          fit
+        ></a-plane>
         <a-entity
           light="type: point; intensity: 0.75; distance: 50; decay: 4"
         ></a-entity>
       </a-camera>
       <!-- Hider walls -->
-      <xrextras-opaque-background remove="false">
+      <xrextras-opaque-background remove="true">
         <a-entity id="hider-walls">
           <a-box
             scale="100 1 100"
@@ -130,8 +141,10 @@
         </a-entity>
         <a-entity
           id="bust"
+          model-click
+          class="cantap"
           gltf-model="/models/zeus_bust.glb"
-          position="-0.177 6.006 -15.377"
+          position="-0.177 6.006 -14.681"
           rotation="0 90 0"
         >
         </a-entity>
@@ -152,19 +165,41 @@
 </template>
 
 <script>
-export default {}
+import InfoModal from './InfoModal.vue'
+export default {
+  data() {
+    return {
+      bgFade: false,
+    }
+  },
+  methods: {
+    doBgFade() {
+      this.bgFade = !this.bgFade
+    },
+  },
+  created() {
+    document.addEventListener('bg-fade', this.doBgFade)
+  },
+}
 </script>
 
 <style scoped>
-.hidden {
-  display: none !important;
-}
 #ar-div {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+}
+#bg-fade {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 6;
+  background-color: white;
+  opacity: 0.8;
 }
 
 .absolute-fill {
