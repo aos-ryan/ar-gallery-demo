@@ -1,13 +1,37 @@
 <template>
   <div id="info-modal">
-    <div id="close-modal" class="close">&times;</div>
+    <div id="close-modal" class="close" @click="handleClose">&times;</div>
     <div class="modal-body">
-      Zeus is the sky and thunder god in ancient Greek religion, who rules as
-      king of the gods on Mount Olympus.
+      {{ modelData[currentModelIndex].info }}
+      <div id="controls">
+        <button id="nav-right" @click.prevent="handleClick">Next</button>
+      </div>
     </div>
   </div>
 </template>
-<script></script>
+<script>
+export default {
+  props: {
+    modelData: Array,
+    currentModelIndex: Number,
+  },
+  data() {
+    return {}
+  },
+  methods: {
+    handleClick() {
+      this.$emit('modelChange')
+    },
+    handleClose() {
+      // remove the zoomBust
+      const zoomBust = document.querySelector('#zoomBust')
+      zoomBust.parentNode.removeChild(zoomBust)
+      // toggle bg fade
+      document.dispatchEvent(new Event('bg-fade'))
+    },
+  },
+}
+</script>
 <style scoped>
 #info-modal {
   z-index: 999;
@@ -20,6 +44,12 @@
   padding: 0% 5%;
   border-radius: 5px;
   pointer-events: auto;
+}
+#controls {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
 }
 
 .modal-body {
@@ -35,18 +65,6 @@
   font-weight: 400;
   text-align: center;
   color: #ffffff;
-}
-.cta {
-  background-color: #ffffff;
-  color: #000000;
-  font-family: 'Monument Extended';
-  font-size: 14px;
-  text-transform: uppercase;
-  padding: 10px 20px;
-  text-decoration: none;
-  border-radius: 20px;
-  margin-top: 10%;
-  margin-bottom: 10%;
 }
 .close {
   position: absolute;

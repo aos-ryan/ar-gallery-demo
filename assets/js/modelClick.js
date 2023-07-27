@@ -1,5 +1,9 @@
 const modelClick = {
   dependencies: ['raycaster'],
+  schema: {
+    modelSrc: { type: 'string', default: '/models/zeus_bust.glb' },
+    zoomScale: { type: 'string' },
+  },
 
   init: function () {
     const bust = this.el
@@ -8,15 +12,14 @@ const modelClick = {
       console.log('entity is clicked')
       // fade the bg
       document.dispatchEvent(new Event('bg-fade'))
-      // remove model from the scene
-      bust.parentNode.removeChild(bust)
+
       // add the model as a child of the camera w/ rotate ability
       const camera = this.el.sceneEl.querySelector('#camera')
       const zoomBust = document.createElement('a-entity')
       zoomBust.id = 'zoomBust'
       zoomBust.setAttribute('class', 'cantap')
-      zoomBust.setAttribute('gltf-model', '/models/zeus_bust.glb')
-      zoomBust.setAttribute('scale', '0.1 0.1 0.1')
+      zoomBust.setAttribute('gltf-model', `${this.data.modelSrc}`)
+      zoomBust.setAttribute('scale', `${this.data.zoomScale}`)
       zoomBust.setAttribute('rotation', '0 90 0')
       zoomBust.setAttribute('position', '0 -0.1 -0.4')
       zoomBust.setAttribute(

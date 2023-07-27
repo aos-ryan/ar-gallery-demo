@@ -5,7 +5,12 @@
       <span id="promptText"></span>
     </div>
     <!-- Info Modal -->
-    <InfoModal v-if="bgFade" />
+    <InfoModal
+      v-if="bgFade"
+      :modelData="modelData"
+      :currentModelIndex="currentModelIndex"
+      @modelChange="handleModelChange"
+    />
 
     <!-- Scene -->
     <a-scene
@@ -16,17 +21,7 @@
       prompt-flow
     >
       <!-- Assets -->
-      <a-assets>
-        <!-- Textures -->
-        <img id="sky" src="/textures/sky.png" />
-        <img id="blob" src="/textures/blob.png" />
-        <audio
-          id="intro"
-          src="/sounds/positive-correct.wav"
-          preload="auto"
-        ></audio>
-        <audio id="hum" src="/sounds/scifi-hum.wav" preload="auto"></audio>
-      </a-assets>
+      <a-assets> </a-assets>
 
       <!-- Camera -->
       <a-camera id="camera" position="0 9 9" portal-camera>
@@ -141,11 +136,12 @@
         </a-entity>
         <a-entity
           id="bust"
-          model-click
+          :model-click="`modelSrc: ${this.modelData[currentModelIndex].src}; zoomScale: ${this.modelData[currentModelIndex].zoomScale}`"
           class="cantap"
-          gltf-model="/models/zeus_bust.glb"
+          :gltf-model="`${this.modelData[currentModelIndex].src}`"
           position="-0.177 6.006 -14.681"
-          rotation="0 90 0"
+          :rotation="`${this.modelData[currentModelIndex].rotation}`"
+          :scale="`${this.modelData[currentModelIndex].scale}`"
         >
         </a-entity>
       </a-entity>
@@ -170,11 +166,47 @@ export default {
   data() {
     return {
       bgFade: false,
+      currentModelIndex: 1,
+      modelData: [
+        {
+          src: '/models/zeus_bust.glb',
+          info: 'Zeus is the sky and thunder god in ancient Greek religion, who rules asking of the gods on Mount Olympus.',
+          rotation: '0 90 0',
+          scale: '1 1 1',
+          zoomScale: '0.1 0.1 0.1',
+        },
+        {
+          src: '/models/lady_bust.glb',
+          info: 'The bust portrays a lady of the Spanish high society of 1909.',
+          rotation: '0 0 0',
+          scale: '4 4 4',
+          zoomScale: '0.5 0.5 0.5',
+        },
+      ],
     }
   },
   methods: {
     doBgFade() {
       this.bgFade = !this.bgFade
+    },
+    handleModelChange() {
+      // update the model index
+      if (this.currentModelIndex < this.modelData.length - 1) {
+        this.currentModelIndex += 1
+      } else {
+        this.currentModelIndex = 0
+      }
+      // force an update of the zoomBust model,
+      const zoomBust = document.querySelector('#zoomBust')
+      zoomBust.setAttribute(
+        'gltf-model',
+        `${this.modelData[this.currentModelIndex].src}`
+      )
+      // include proper scale
+      zoomBust.setAttribute(
+        'scale',
+        `${this.modelData[this.currentModelIndex].zoomScale}`
+      )
     },
   },
   created() {
