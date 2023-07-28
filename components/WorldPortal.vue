@@ -19,7 +19,9 @@
       renderer="colorManagement: true;"
       tap-to-place-portal
       prompt-flow
+      stats
     >
+      <!-- stats -->
       <!-- Assets -->
       <a-assets> </a-assets>
 
@@ -136,7 +138,7 @@
         </a-entity>
         <a-entity
           id="bust"
-          :model-click="`modelSrc: ${this.modelData[currentModelIndex].src}; zoomScale: ${this.modelData[currentModelIndex].zoomScale}`"
+          :model-click="`modelSrc: ${this.modelData[currentModelIndex].src}; zoomScale: ${this.modelData[currentModelIndex].zoomScale}; rotation: ${this.modelData[currentModelIndex].rotation} `"
           class="cantap"
           :gltf-model="`${this.modelData[currentModelIndex].src}`"
           position="-0.177 6.006 -14.681"
@@ -168,12 +170,19 @@ export default {
       bgFade: false,
       currentModelIndex: 1,
       modelData: [
+        // {
+        //   src: '/models/zeus_bust.glb',
+        //   info: 'Zeus is the sky and thunder god in ancient Greek religion, who rules asking of the gods on Mount Olympus.',
+        //   rotation: '0 90 0',
+        //   scale: '1 1 1',
+        //   zoomScale: '0.1 0.1 0.1',
+        // },
         {
-          src: '/models/zeus_bust.glb',
+          src: '/models/zeus_small.glb',
           info: 'Zeus is the sky and thunder god in ancient Greek religion, who rules asking of the gods on Mount Olympus.',
-          rotation: '0 90 0',
-          scale: '1 1 1',
-          zoomScale: '0.1 0.1 0.1',
+          rotation: '0 -90 0',
+          scale: '0.05 0.05 0.05',
+          zoomScale: '0.01 0.01 0.01',
         },
         {
           src: '/models/lady_bust.glb',

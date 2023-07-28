@@ -60,7 +60,6 @@ const rotateComponent = {
   onTouchEnd: function (event) {
     if (event.touches.length === 0) {
       this.isRotating = false
-      this.spinMesh()
     }
   },
   rotateMesh: function () {
@@ -68,13 +67,6 @@ const rotateComponent = {
     this.rotation.y += this.velocity.x * this.data.factor
     this.el.object3D.rotation.y = this.rotation.y
     this.previousPoint.copy(this.currentPoint)
-  },
-  spinMesh: function () {
-    this.rotation.y *= this.data.friction
-    this.el.object3D.rotation.y = -this.rotation.y
-    if (Math.abs(this.rotation.y) > 0.001) {
-      this.animationId = requestAnimationFrame(this.spinMesh.bind(this))
-    }
   },
 }
 export { rotateComponent }

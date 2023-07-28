@@ -3,6 +3,7 @@ const modelClick = {
   schema: {
     modelSrc: { type: 'string', default: '/models/zeus_bust.glb' },
     zoomScale: { type: 'string' },
+    rotation: { type: 'string', default: '0 0 0' },
   },
 
   init: function () {
@@ -20,12 +21,13 @@ const modelClick = {
       zoomBust.setAttribute('class', 'cantap')
       zoomBust.setAttribute('gltf-model', `${this.data.modelSrc}`)
       zoomBust.setAttribute('scale', `${this.data.zoomScale}`)
-      zoomBust.setAttribute('rotation', '0 90 0')
+      zoomBust.setAttribute('rotation', `${this.data.rotation}`)
+      zoomBust.setAttribute('rotate', '')
       zoomBust.setAttribute('position', '0 -0.1 -0.4')
-      zoomBust.setAttribute(
-        'animation',
-        'property: rotation; to: 0 450 0; loop: true; dur: 10000; easing: linear'
-      )
+      // zoomBust.setAttribute(
+      //   'animation',
+      //   'property: rotation; to: 0 360 0; loop: true; dur: 10000; easing: linear'
+      // )
 
       camera.appendChild(zoomBust)
     })
