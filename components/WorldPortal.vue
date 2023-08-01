@@ -32,15 +32,16 @@
           cursor="fuse: false; rayOrigin: mouse;"
         >
         </a-entity>
+        <a-entity id="zoomMarker" position="0 -0.5 -3"></a-entity>
         <!-- Plane that blocks the scene -->
-        <a-plane
+        <!-- <a-plane
           v-if="bgFade"
           height="1"
           width="1"
           position="0 0 -3"
           material="shader: flat; transparent: true; opacity: 1"
           fit
-        ></a-plane>
+        ></a-plane> -->
         <a-entity
           light="type: point; intensity: 0.75; distance: 50; decay: 4"
         ></a-entity>
@@ -136,10 +137,12 @@
           rotation="0 180 0"
         >
         </a-entity>
+        <!-- Bust in scene -->
+        <a-entity id="bustMarker" position="-0.177 6.006 -14.681"> </a-entity>
         <a-entity
           id="bust"
-          :model-click="`modelSrc: ${this.modelData[currentModelIndex].src}; zoomScale: ${this.modelData[currentModelIndex].zoomScale}; rotation: ${this.modelData[currentModelIndex].rotation} `"
           class="cantap"
+          move-to-marker
           :gltf-model="`${this.modelData[currentModelIndex].src}`"
           position="-0.177 6.006 -14.681"
           :rotation="`${this.modelData[currentModelIndex].rotation}`"
@@ -168,7 +171,7 @@ export default {
   data() {
     return {
       bgFade: false,
-      currentModelIndex: 1,
+      currentModelIndex: 0,
       modelData: [
         // {
         //   src: '/models/zeus_bust.glb',
@@ -206,15 +209,20 @@ export default {
         this.currentModelIndex = 0
       }
       // force an update of the zoomBust model,
-      const zoomBust = document.querySelector('#zoomBust')
-      zoomBust.setAttribute(
+      const bust = document.querySelector('#bust')
+      bust.setAttribute(
         'gltf-model',
         `${this.modelData[this.currentModelIndex].src}`
       )
       // include proper scale
-      zoomBust.setAttribute(
+      bust.setAttribute(
         'scale',
         `${this.modelData[this.currentModelIndex].zoomScale}`
+      )
+      // include proper rotation
+      bust.setAttribute(
+        'rotation',
+        `${this.modelData[this.currentModelIndex].rotation}`
       )
     },
   },

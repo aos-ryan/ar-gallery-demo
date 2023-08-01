@@ -1,12 +1,11 @@
 <template>
   <div id="info-modal">
-    <!-- <div id="close-modal" class="close" @click="handleClose">&times;</div> -->
+    <div id="close-modal" class="close" @click="handleClose">&times;</div>
     <div class="modal-body">
       {{ modelData[currentModelIndex].info }}
       <div id="controls">
         <button id="nav-right" @click.prevent="handleClick">Next</button>
       </div>
-      <p class="instructions">Tap bust again to replace on the pedestal</p>
     </div>
   </div>
 </template>
@@ -24,6 +23,9 @@ export default {
       this.$emit('modelChange')
     },
     handleClose() {
+      // remove the zoomBust
+      const zoomBust = document.querySelector('#zoomBust')
+      zoomBust.parentNode.removeChild(zoomBust)
       // toggle bg fade
       document.dispatchEvent(new Event('bg-fade'))
     },
@@ -63,11 +65,6 @@ export default {
   font-weight: 400;
   text-align: center;
   color: #ffffff;
-}
-.instructions {
-  user-select: none;
-  font-style: italic;
-  font-size: 12px;
 }
 .close {
   position: absolute;
