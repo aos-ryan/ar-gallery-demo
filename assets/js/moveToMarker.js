@@ -27,7 +27,6 @@ const moveToMarker = {
 
     const firstClickEvent = (e) => {
       document.dispatchEvent(new Event('bg-fade'))
-      this.bustZoomed = !this.bustZoomed
 
       // get world position of marker
       const realWorldPosition = new THREE.Vector3()
@@ -37,7 +36,10 @@ const moveToMarker = {
         'animation',
         `property: position; to: ${realWorldPosition.x}, ${realWorldPosition.y}, ${realWorldPosition.z}; dur:1000; easing: easeInQuad `
       )
-      this.bust.setAttribute('rotate', '')
+      // wait for animation to be complete and then trigger the bustZoomed toggle
+      this.bust.addEventListener('animationcomplete', () => {
+        this.bustZoomed = !this.bustZoomed
+      })
 
       // remove the event after the first time the model is clicked
       this.bust.removeEventListener('click', firstClickEvent)
@@ -49,13 +51,17 @@ const moveToMarker = {
     this.bust.addEventListener('click', firstClickEvent)
   },
   tick() {
-    // if (this.bustZoomed) {
-    //   // get world position of marker
-    //   const realWorldPosition = new THREE.Vector3()
-    //   this.marker.object3D.getWorldPosition(realWorldPosition)
-    //   // lerp bust to marker
-    //   this.bust.object3D.position.lerp(realWorldPosition, 0.1)
-    // }
+    if (this.bustZoomed) {
+      // get world position of marker
+      const realWorldPosition = new THREE.Vector3()
+      this.marker.object3D.getWorldPosition(realWorldPosition)
+      // lerp bust to marker
+      this.bust.object3D.position.set({
+        x: realWorldPosition.x,
+        y: realWorldPosition.y,
+        z: realWorldPosition.z,
+      })
+    }
   },
 }
 export { moveToMarker }
