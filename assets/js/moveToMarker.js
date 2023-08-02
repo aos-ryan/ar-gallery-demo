@@ -10,15 +10,19 @@ const moveToMarker = {
     this.camera = document.querySelector('#camera')
     this.bustZoomed = false
 
+    // setup animation complete event listener on the model
+    this.bust.addEventListener('animationcomplete', () => {
+      this.bustZoomed = true
+    })
+
     const secondClickEvent = (e) => {
       // turn off the info modal
       document.dispatchEvent(new Event('bg-fade'))
       // let the logic know the bust is not zoomed
-      this.bustZoomed = !this.bustZoomed
+      this.bustZoomed = false
       // return bust to the pedestal
       this.bust.setAttribute('position', '-0.177 6.006 -14.681')
-      // remove rotate ability
-      this.bust.removeAttribute('rotate')
+
       // re add the first click event so it can be run again
       this.bust.addEventListener('click', firstClickEvent)
       // remove event listener
@@ -34,12 +38,8 @@ const moveToMarker = {
       //
       this.bust.setAttribute(
         'animation',
-        `property: position; to: ${realWorldPosition.x}, ${realWorldPosition.y}, ${realWorldPosition.z}; dur:1000; easing: easeInQuad `
+        `property: position; to: ${realWorldPosition.x}, ${realWorldPosition.y}, ${realWorldPosition.z}; dur:300; easing: linear `
       )
-      // wait for animation to be complete and then trigger the bustZoomed toggle
-      this.bust.addEventListener('animationcomplete', () => {
-        this.bustZoomed = !this.bustZoomed
-      })
 
       // remove the event after the first time the model is clicked
       this.bust.removeEventListener('click', firstClickEvent)
@@ -55,12 +55,11 @@ const moveToMarker = {
       // get world position of marker
       const realWorldPosition = new THREE.Vector3()
       this.marker.object3D.getWorldPosition(realWorldPosition)
-      // lerp bust to marker
-      this.bust.object3D.position.set({
-        x: realWorldPosition.x,
-        y: realWorldPosition.y,
-        z: realWorldPosition.z,
-      })
+      // track bust to marker
+      this.bust.setAttribute(
+        'position',
+        `${realWorldPosition.x}, ${realWorldPosition.y}, ${realWorldPosition.z} `
+      )
     }
   },
 }
