@@ -32,7 +32,7 @@
           cursor="fuse: false; rayOrigin: mouse;"
         >
         </a-entity>
-        <a-entity id="zoomMarker" position="0 -0.5 -3"></a-entity>
+        <!-- <a-entity id="zoomMarker" position="0 -0.5 -3"></a-entity> -->
         <!-- Plane that blocks the scene -->
         <!-- <a-plane
           v-if="bgFade"
@@ -142,7 +142,7 @@
         <a-entity
           id="bust"
           class="cantap"
-          move-to-marker
+          :move-to-marker="`defaultRotation: ${this.modelData[currentModelIndex].rotation}`"
           :gltf-model="`${this.modelData[currentModelIndex].src}`"
           position="-0.177 6.006 -14.681"
           :rotation="`${this.modelData[currentModelIndex].rotation}`"
@@ -173,13 +173,6 @@ export default {
       bgFade: false,
       currentModelIndex: 0,
       modelData: [
-        // {
-        //   src: '/models/zeus_bust.glb',
-        //   info: 'Zeus is the sky and thunder god in ancient Greek religion, who rules asking of the gods on Mount Olympus.',
-        //   rotation: '0 90 0',
-        //   scale: '1 1 1',
-        //   zoomScale: '0.1 0.1 0.1',
-        // },
         {
           src: '/models/zeus_small.glb',
           info: 'Zeus is the sky and thunder god in ancient Greek religion, who rules asking of the gods on Mount Olympus.',
