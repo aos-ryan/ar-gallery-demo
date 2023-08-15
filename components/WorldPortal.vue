@@ -14,6 +14,7 @@
 
     <!-- Scene -->
     <a-scene
+      light="defaultLightsEnabled: false"
       xrweb="allowedDevices: any; disableDefaultEnvironment: false; disableWorldTracking:false"
       xrextras-runtime-error
       renderer="colorManagement: true;"
@@ -27,12 +28,8 @@
 
       <!-- Camera -->
       <a-camera id="camera" position="0 9 9" portal-camera>
-        <a-entity
-          raycaster="objects: .cantap"
-          cursor="fuse: false; rayOrigin: mouse;"
-        >
-        </a-entity>
-        <!-- <a-entity id="zoomMarker" position="0 -0.5 -3"></a-entity> -->
+        <a-entity raycaster="objects: .bustMarker; far: 25"> </a-entity>
+
         <!-- Plane that blocks the scene -->
         <!-- <a-plane
           v-if="bgFade"
@@ -41,13 +38,19 @@
           position="0 0 -3"
           material="shader: flat; transparent: true; opacity: 1"
           fit
-        ></a-plane> -->
-        <a-entity
-          light="type: point; intensity: 0.75; distance: 50; decay: 4"
-        ></a-entity>
+          ></a-plane> -->
       </a-camera>
+
+      <!-- ambient light -->
+      <a-light
+        id="ambient-scene-light"
+        type="ambient"
+        color="#CCC"
+        intensity="0"
+      ></a-light>
+
       <!-- Hider walls -->
-      <xrextras-opaque-background remove="true">
+      <xrextras-opaque-background remove="false">
         <a-entity id="hider-walls">
           <a-box
             scale="100 1 100"
@@ -130,24 +133,75 @@
       <!-- Portal Contents -->
       <a-entity id="portal-contents">
         <a-entity
-          id="galleryModel"
-          gltf-model="/models/vr_gallery.glb"
-          position="0 3.561 -15.377"
-          scale="3 3 3"
-          rotation="0 180 0"
+          id="room"
+          geometry="primitive: box"
+          material="side: back"
+          scale="50 50 50"
+          position="-0.177 25.25 -25.22"
         >
         </a-entity>
-        <!-- Bust in scene -->
-        <a-entity id="bustMarker" position="-0.177 6.006 -14.681"> </a-entity>
+        <!-- entity bust example -->
+        <!-- <a-entity
+        id="zeus-bust"
+        class="cantap"
+        :gltf-model="`${this.modelData[currentModelIndex].src}`"
+        :rotation="`${this.modelData[currentModelIndex].rotation}`"
+        :scale="`${this.modelData[currentModelIndex].scale}`"
+        :move-to-marker="`defaultRotation: ${this.modelData[currentModelIndex].rotation}`"
+        position="0 4 0"
+          >
+          </a-entity> -->
+
         <a-entity
-          id="bust"
-          class="cantap"
-          :move-to-marker="`defaultRotation: ${this.modelData[currentModelIndex].rotation}`"
-          :gltf-model="`${this.modelData[currentModelIndex].src}`"
-          position="-0.177 6.006 -14.681"
-          :rotation="`${this.modelData[currentModelIndex].rotation}`"
-          :scale="`${this.modelData[currentModelIndex].scale}`"
+          id="pedestal-one"
+          geometry="primitive: box; width: 3; height: 8; depth: 3"
+          position="-22 1 -10"
         >
+          <a-entity
+            class="bustMarker"
+            position="0 4 0"
+            rotation="0 90 0"
+            scale="5 10 1"
+            geometry="primitive: plane"
+            material="transparent: true; opacity: 0"
+          >
+          </a-entity>
+          <a-entity
+            id="zeus"
+            class="cantap"
+            :gltf-model="`${this.modelData[0].src}`"
+            :rotation="`${this.modelData[0].rotation}`"
+            :scale="`${this.modelData[0].scale}`"
+            position="0 4 0.325"
+            spotlight
+          >
+          </a-entity>
+        </a-entity>
+
+        <a-entity
+          id="pedestal-two"
+          geometry="primitive: box; width: 3; height: 8; depth: 3"
+          position="-22 1 -20"
+        >
+          <a-entity
+            class="bustMarker"
+            position="0 4 0"
+            rotation="0 90 0"
+            scale="5 10 1"
+            geometry="primitive: plane"
+            material="transparent: true; opacity: 0"
+          >
+          </a-entity>
+          <a-entity
+            id="lady"
+            class="cantap"
+            :gltf-model="`${this.modelData[1].src}`"
+            :rotation="`${this.modelData[1].rotation}`"
+            :scale="`${this.modelData[1].scale}`"
+            position="0 4 0"
+            spotlight
+          >
+          </a-entity>
         </a-entity>
       </a-entity>
 
@@ -158,7 +212,6 @@
         position="0 7 11.65"
         rotation="0 0 0"
         scale="0.001 0.001 0.001"
-        shadow="receive: false"
       >
       </a-entity>
     </a-scene>
@@ -173,18 +226,25 @@ export default {
       bgFade: false,
       currentModelIndex: 0,
       modelData: [
+        // {
+        //   src: '/models/zeus_small.glb',
+        //   info: 'Zeus is the sky and thunder god in ancient Greek religion, who rules asking of the gods on Mount Olympus.',
+        //   rotation: '0 -90 0',
+        //   scale: '0.05 0.05 0.05',
+        //   zoomScale: '0.01 0.01 0.01',
+        // },
         {
-          src: '/models/zeus_small.glb',
+          src: '/models/zeus_bust.glb',
           info: 'Zeus is the sky and thunder god in ancient Greek religion, who rules asking of the gods on Mount Olympus.',
-          rotation: '0 -90 0',
-          scale: '0.05 0.05 0.05',
-          zoomScale: '0.01 0.01 0.01',
+          rotation: '0 -180 0',
+          scale: '1 1 1',
+          zoomScale: '0.5 0.5 0.5',
         },
         {
           src: '/models/lady_bust.glb',
           info: 'The bust portrays a lady of the Spanish high society of 1909.',
-          rotation: '0 0 0',
-          scale: '4 4 4',
+          rotation: '0 90 0',
+          scale: '5 5 5',
           zoomScale: '0.5 0.5 0.5',
         },
       ],
