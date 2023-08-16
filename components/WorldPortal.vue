@@ -41,14 +41,6 @@
           ></a-plane> -->
       </a-camera>
 
-      <!-- ambient light -->
-      <a-light
-        id="ambient-scene-light"
-        type="ambient"
-        color="#CCC"
-        intensity="0"
-      ></a-light>
-
       <!-- Hider walls -->
       <xrextras-opaque-background remove="false">
         <a-entity id="hider-walls">

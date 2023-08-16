@@ -4,12 +4,39 @@ const portalCameraComponent = {
     height: { default: 10 },
   },
   init() {
+    // find camera, contents, and portal elements
     this.camera = this.el
     this.contents = document.getElementById('portal-contents')
     this.walls = document.getElementById('hider-walls')
     this.portalWall = document.getElementById('portal-wall')
     this.isInPortalSpace = false
     this.wasOutside = true
+    this.lightsOn = false
+    this.toggleLights = false
+
+    // create logic for the ambient light in the scene
+    this.ambientLight = document.createElement('a-light')
+    this.ambientLight.setAttribute('id', 'ambient-scene-light')
+    this.ambientLight.setAttribute('type', 'ambient')
+    this.ambientLight.setAttribute('color', '#CCC')
+    this.ambientLight.setAttribute('intensity', '0.1')
+    this.ambientLight.setAttribute('animation__ambientlightson', {
+      property: 'intensity',
+      to: '0.3',
+      dur: 500,
+      startEvents: 'turnOnAmbientLight',
+    })
+    this.ambientLight.setAttribute('animation__ambientlightsoff', {
+      property: 'intensity',
+      to: '0.1',
+      dur: 500,
+      startEvents: 'turnOffAmbientLight',
+    })
+    // add ambientLight to the scene
+    this.camera.sceneEl.appendChild(this.ambientLight)
+    document.querySelector('a-scene').addEventListener('loaded', () => {
+      console.log(this.ambientLight.components.light.light.intensity)
+    })
   },
   tick() {
     const { position } = this.camera.object3D
@@ -24,6 +51,22 @@ const portalCameraComponent = {
     this.walls.object3D.visible = !this.isInPortalSpace && isOutside
     this.portalWall.object3D.visible = this.isInPortalSpace && !isOutside
     this.wasOutside = isOutside
+
+    // toggle ambient lights when in portal
+    if (!isOutside) {
+      this.toggleLights = true
+      if (this.toggleLights && !this.lightsOn) {
+        console.log('turn on lights')
+        this.ambientLight.emit('turnOnAmbientLight')
+        this.toggleLights = false
+        this.lightsOn = true
+      }
+    }
+    if (isOutside && this.lightsOn) {
+      this.ambientLight.emit('turnOffAmbientLight')
+      console.log('turn off lights')
+      this.lightsOn = false
+    }
   },
 }
 const tapToPlacePortalComponent = {
