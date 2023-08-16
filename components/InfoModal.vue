@@ -3,9 +3,9 @@
     <!-- <div id="close-modal" class="close" @click="handleClose">&times;</div> -->
     <div class="modal-body">
       {{ modelData[currentModelIndex].info }}
-      <div id="controls">
+      <!-- <div id="controls">
         <button id="nav-right" @click.prevent="handleClick">Next</button>
-      </div>
+      </div> -->
       <p class="instructions">Tap bust again to replace on the pedestal</p>
     </div>
   </div>

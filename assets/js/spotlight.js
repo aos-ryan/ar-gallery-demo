@@ -1,4 +1,7 @@
 const spotlight = {
+  schema: {
+    enabled: { default: true },
+  },
   init: function () {
     const model = this.el
     const parent = this.el.parentNode
@@ -27,11 +30,10 @@ const spotlight = {
     // add spotlight to the scene
     parent.appendChild(spotlight)
 
-    // add an event listener to the bust element that looks for a raycaster intersection and turns on spotlight
+    // add an event listeners to the bust element that looks for a raycaster intersection and turns on/offm spotlight
     raycastMarker.addEventListener('raycaster-intersected', () => {
       spotlight.emit('raycasterIntersectingTarget', null, false)
     })
-    // add an event listener to the bust element that looks for a raycaster intersection and turns off spotlight
     raycastMarker.addEventListener('raycaster-intersected-cleared', () => {
       spotlight.emit('raycasterLeftIntersectingTarget', null, false)
     })

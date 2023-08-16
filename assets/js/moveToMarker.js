@@ -6,9 +6,8 @@ const moveToMarker = {
   },
   init() {
     this.bust = this.el
-    this.marker = document.querySelector('#zoomMarker')
     this.camera = document.querySelector('#camera')
-    this.portalContents = document.querySelector('#portal-contents')
+    this.pedestal = this.el.parentNode
     this.bustZoomed = false
 
     const secondClickEvent = (e) => {
@@ -19,9 +18,9 @@ const moveToMarker = {
       // remove rotate
       this.bust.removeAttribute('rotate')
       // reattach bust to portal contents
-      this.portalContents.object3D.attach(this.bust.object3D)
+      this.pedestal.object3D.attach(this.bust.object3D)
       // return bust to the pedestal
-      this.bust.setAttribute('position', '-0.177 6.006 -14.681')
+      this.bust.setAttribute('position', '0 4 0')
       this.bust.setAttribute('rotation', this.data.defaultRotation)
 
       // re add the first click event so it can be run again
@@ -33,8 +32,18 @@ const moveToMarker = {
     const firstClickEvent = (e) => {
       document.dispatchEvent(new Event('bg-fade'))
       this.bustZoomed = true
+      // where is bust when clicked
+      console.log('local position:', this.bust.object3D.position)
+      console.log(
+        'world position:',
+        this.bust.object3D.getWorldPosition(new THREE.Vector3())
+      )
+      // remove bust from its parent (pedestal entity) and attach to the scene element
+      this.bust.sceneEl.object3D.attach(this.bust.object3D)
       // add rotate
       this.bust.setAttribute('rotate', '')
+      // disable spotlight
+      this.bust.removeAttribute('spotlight')
       // remove the event after the first time the model is clicked
       this.bust.removeEventListener('click', firstClickEvent)
       // add the second click event which handles placing the modal back on the pedestal
@@ -48,7 +57,9 @@ const moveToMarker = {
     const distanceFromCamera = 2
     const target = new THREE.Vector3(0, 0, -distanceFromCamera)
     target.applyMatrix4(this.camera.object3D.matrixWorld)
-
+    // const distance = this.bust.object3D
+    //   .getWorldPosition(new THREE.Vector3())
+    //   .distanceTo(target)
     const distance = Math.round(this.bust.object3D.position.distanceTo(target))
     // console.log(distance)
     if (this.bustZoomed && distance > 0) {

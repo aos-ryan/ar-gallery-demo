@@ -31,6 +31,10 @@
       <!-- Camera -->
       <a-camera id="camera" position="0 9 9" portal-camera>
         <a-entity raycaster="objects: .bustMarker; far: 25"> </a-entity>
+        <a-entity
+          cursor="fuse: false; rayOrigin: mouse;"
+          raycaster="objects: .cantap"
+        ></a-entity>
 
         <!-- Plane that blocks the scene -->
         <!-- <a-plane
@@ -141,10 +145,9 @@
         :gltf-model="`${this.modelData[currentModelIndex].src}`"
         :rotation="`${this.modelData[currentModelIndex].rotation}`"
         :scale="`${this.modelData[currentModelIndex].scale}`"
-        :move-to-marker="`defaultRotation: ${this.modelData[currentModelIndex].rotation}`"
         position="0 4 0"
-          >
-          </a-entity> -->
+        >
+      </a-entity> -->
 
         <a-entity
           id="pedestal-one"
@@ -166,7 +169,8 @@
             :gltf-model="`${this.modelData[1].src}`"
             :rotation="`${this.modelData[1].rotation}`"
             :scale="`${this.modelData[1].scale}`"
-            position="0 4 0.325"
+            position="0 4 0"
+            :move-to-marker="`defaultRotation: ${this.modelData[1].rotation}`"
             spotlight
           >
           </a-entity>
@@ -193,6 +197,7 @@
             :rotation="`${this.modelData[1].rotation}`"
             :scale="`${this.modelData[1].scale}`"
             position="0 4 0"
+            :move-to-marker="`defaultRotation: ${this.modelData[1].rotation}`"
             spotlight
           >
           </a-entity>
