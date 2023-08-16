@@ -24,7 +24,9 @@
     >
       <!-- stats -->
       <!-- Assets -->
-      <a-assets> </a-assets>
+      <a-assets>
+        <img id="brick" src="/textures/brickwall.jpg" />
+      </a-assets>
 
       <!-- Camera -->
       <a-camera id="camera" position="0 9 9" portal-camera>
@@ -42,7 +44,7 @@
       </a-camera>
 
       <!-- Hider walls -->
-      <xrextras-opaque-background remove="false">
+      <xrextras-opaque-background remove="true">
         <a-entity id="hider-walls">
           <a-box
             scale="100 1 100"
@@ -127,7 +129,7 @@
         <a-entity
           id="room"
           geometry="primitive: box"
-          material="side: back"
+          material="src: #brick; side: back"
           scale="50 50 50"
           position="-0.177 25.25 -25.22"
         >
@@ -161,9 +163,9 @@
           <a-entity
             id="zeus"
             class="cantap"
-            :gltf-model="`${this.modelData[0].src}`"
-            :rotation="`${this.modelData[0].rotation}`"
-            :scale="`${this.modelData[0].scale}`"
+            :gltf-model="`${this.modelData[1].src}`"
+            :rotation="`${this.modelData[1].rotation}`"
+            :scale="`${this.modelData[1].scale}`"
             position="0 4 0.325"
             spotlight
           >
