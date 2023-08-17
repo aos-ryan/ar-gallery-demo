@@ -17,8 +17,10 @@ const moveToMarker = {
       this.bustZoomed = false
       // remove rotate
       this.bust.removeAttribute('rotate')
-      // reattach bust to portal contents
+      // reattach bust to pedestal
       this.pedestal.object3D.attach(this.bust.object3D)
+      // add spotlight back
+      this.bust.setAttribute('spotlight', '')
       // return bust to the pedestal
       this.bust.setAttribute('position', '0 4 0')
       this.bust.setAttribute('rotation', this.data.defaultRotation)
@@ -55,7 +57,7 @@ const moveToMarker = {
   },
   tick() {
     const distanceFromCamera = 2
-    const target = new THREE.Vector3(0, 0, -distanceFromCamera)
+    const target = new THREE.Vector3(0, -1, -distanceFromCamera)
     target.applyMatrix4(this.camera.object3D.matrixWorld)
     // const distance = this.bust.object3D
     //   .getWorldPosition(new THREE.Vector3())

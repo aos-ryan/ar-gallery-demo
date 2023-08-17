@@ -3,32 +3,33 @@ const spotlight = {
     enabled: { default: true },
   },
   init: function () {
-    const model = this.el
-    const parent = this.el.parentNode
-    const raycastMarker = parent.querySelector('.bustMarker')
+    this.model = this.el
+    this.parent = this.el.parentNode
+    const raycastMarker = this.parent.querySelector('.bustMarker')
     console.log(raycastMarker)
 
     // create the spotlight and point it at the entity
     const spotlight = document.createElement('a-light')
+    spotlight.setAttribute('id', `${this.model.id}-spotlight`)
     spotlight.setAttribute('type', 'spot')
-    spotlight.setAttribute('target', `#${model.id}`)
+    spotlight.setAttribute('target', `#${this.model.id}`)
     spotlight.setAttribute('angle', '30')
     spotlight.setAttribute('intensity', '0')
     spotlight.setAttribute('position', '5 10 0')
-    spotlight.setAttribute(`animation__${model.id}lightup`, {
+    spotlight.setAttribute(`animation__${this.model.id}lightup`, {
       property: 'intensity',
       to: '1',
       dur: 500,
       startEvents: 'raycasterIntersectingTarget',
     })
-    spotlight.setAttribute(`animation__${model.id}lightoff`, {
+    spotlight.setAttribute(`animation__${this.model.id}lightoff`, {
       property: 'intensity',
       to: '0',
       dur: 500,
       startEvents: 'raycasterLeftIntersectingTarget',
     })
     // add spotlight to the scene
-    parent.appendChild(spotlight)
+    this.parent.appendChild(spotlight)
 
     // add an event listeners to the bust element that looks for a raycaster intersection and turns on/offm spotlight
     raycastMarker.addEventListener('raycaster-intersected', () => {
@@ -37,6 +38,10 @@ const spotlight = {
     raycastMarker.addEventListener('raycaster-intersected-cleared', () => {
       spotlight.emit('raycasterLeftIntersectingTarget', null, false)
     })
+  },
+  remove: function () {
+    const spotlight = document.querySelector(`#${this.model.id}-spotlight`)
+    spotlight.remove()
   },
 }
 export { spotlight }

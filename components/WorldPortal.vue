@@ -233,6 +233,7 @@ export default {
         //   zoomScale: '0.01 0.01 0.01',
         // },
         {
+          id: 'zeus',
           src: '/models/zeus_bust.glb',
           info: 'Zeus is the sky and thunder god in ancient Greek religion, who rules asking of the gods on Mount Olympus.',
           rotation: '0 -180 0',
@@ -240,6 +241,7 @@ export default {
           zoomScale: '0.5 0.5 0.5',
         },
         {
+          id: 'lady',
           src: '/models/lady_bust.glb',
           info: 'The bust portrays a lady of the Spanish high society of 1909.',
           rotation: '0 90 0',
