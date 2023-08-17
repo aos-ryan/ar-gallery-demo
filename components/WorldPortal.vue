@@ -59,78 +59,18 @@
           position="-0.177 25.25 -25.22"
         >
         </a-entity>
-        <!-- <a-entity
-          id="galleryModel"
-          gltf-model="/models/vr_gallery.glb"
-          position="0 0 -25.45"
-          scale="5 5 5"
-          rotation="0 180 0"
+        <!-- Busts / Models in scene -->
+        <Models
+          v-for="model in modelData"
+          :id="model.id"
+          :src="model.src"
+          :info="model.info"
+          :rotation="model.rotation"
+          :scale="model.scale"
+          :zoomScale="model.zoomScale"
+          :position="model.position"
         >
-        </a-entity> -->
-        <!-- entity bust example -->
-        <!-- <a-entity
-        id="zeus-bust"
-        class="cantap"
-        :gltf-model="`${this.modelData[currentModelIndex].src}`"
-        :rotation="`${this.modelData[currentModelIndex].rotation}`"
-        :scale="`${this.modelData[currentModelIndex].scale}`"
-        position="0 4 0"
-        >
-      </a-entity> -->
-
-        <a-entity
-          id="pedestal-one"
-          geometry="primitive: box; width: 3; height: 8; depth: 3"
-          position="-22 1 -10"
-        >
-          <a-entity
-            class="bustMarker"
-            position="0 4 0"
-            rotation="0 90 0"
-            scale="5 10 1"
-            geometry="primitive: plane"
-            material="transparent: true; opacity: 0"
-          >
-          </a-entity>
-          <a-entity
-            id="zeus"
-            class="cantap"
-            :gltf-model="`${this.modelData[1].src}`"
-            :rotation="`${this.modelData[1].rotation}`"
-            :scale="`${this.modelData[1].scale}`"
-            position="0 4 0"
-            :move-to-marker="`defaultRotation: ${this.modelData[1].rotation}`"
-            spotlight
-          >
-          </a-entity>
-        </a-entity>
-
-        <a-entity
-          id="pedestal-two"
-          geometry="primitive: box; width: 3; height: 8; depth: 3"
-          position="-22 1 -20"
-        >
-          <a-entity
-            class="bustMarker"
-            position="0 4 0"
-            rotation="0 90 0"
-            scale="5 10 1"
-            geometry="primitive: plane"
-            material="transparent: true; opacity: 0"
-          >
-          </a-entity>
-          <a-entity
-            id="lady"
-            class="cantap"
-            :gltf-model="`${this.modelData[1].src}`"
-            :rotation="`${this.modelData[1].rotation}`"
-            :scale="`${this.modelData[1].scale}`"
-            position="0 4 0"
-            :move-to-marker="`defaultRotation: ${this.modelData[1].rotation}`"
-            spotlight
-          >
-          </a-entity>
-        </a-entity>
+        </Models>
       </a-entity>
 
       <!-- Portal -->
@@ -149,11 +89,13 @@
 <script>
 import InfoModal from './InfoModal.vue'
 import HiderWalls from './HiderWalls.vue'
+import Models from './Models.vue'
 
 export default {
   components: {
     InfoModal,
     HiderWalls,
+    Models,
   },
   data() {
     return {
@@ -161,20 +103,14 @@ export default {
       currentModelIndex: 0,
       modelData: [
         // {
-        //   src: '/models/zeus_small.glb',
+        //   id: 'zeus',
+        //   src: '/models/zeus_bust.glb',
         //   info: 'Zeus is the sky and thunder god in ancient Greek religion, who rules asking of the gods on Mount Olympus.',
-        //   rotation: '0 -90 0',
-        //   scale: '0.05 0.05 0.05',
-        //   zoomScale: '0.01 0.01 0.01',
+        //   rotation: '0 -180 0',
+        //   scale: '1 1 1',
+        //   zoomScale: '0.5 0.5 0.5',
+        //   position: '-22 1 -10',
         // },
-        {
-          id: 'zeus',
-          src: '/models/zeus_bust.glb',
-          info: 'Zeus is the sky and thunder god in ancient Greek religion, who rules asking of the gods on Mount Olympus.',
-          rotation: '0 -180 0',
-          scale: '1 1 1',
-          zoomScale: '0.5 0.5 0.5',
-        },
         {
           id: 'lady',
           src: '/models/lady_bust.glb',
@@ -182,6 +118,16 @@ export default {
           rotation: '0 90 0',
           scale: '5 5 5',
           zoomScale: '0.5 0.5 0.5',
+          position: '-22 1 -10',
+        },
+        {
+          id: 'lady2',
+          src: '/models/lady_bust.glb',
+          info: 'The bust portrays a lady of the Spanish high society of 1909.',
+          rotation: '0 90 0',
+          scale: '5 5 5',
+          zoomScale: '0.5 0.5 0.5',
+          position: '-22 1 -20',
         },
       ],
     }

@@ -79,5 +79,7 @@
     </a-entity>
   </xrextras-opaque-background>
 </template>
-<script></script>
+<script>
+export default {}
+</script>
 <style></style>
