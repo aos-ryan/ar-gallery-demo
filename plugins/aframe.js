@@ -12,6 +12,7 @@ import { modelClick } from '~/assets/js/modelClick'
 import { moveToMarker } from '~/assets/js/moveToMarker'
 import { spotlight } from '~/assets/js/spotlight'
 import fitComponent from '~/assets/js/fit'
+import { points } from '~/assets/js/points'
 
 AFRAME.registerComponent('portal-camera', portalCameraComponent)
 AFRAME.registerComponent('prompt-flow', promptFlowComponent)
@@ -26,3 +27,4 @@ AFRAME.registerComponent('rotate', rotateComponent)
 AFRAME.registerComponent('model-click', modelClick)
 AFRAME.registerComponent('move-to-marker', moveToMarker)
 AFRAME.registerComponent('spotlight', spotlight)
+AFRAME.registerComponent('points', points)

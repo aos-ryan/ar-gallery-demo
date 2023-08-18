@@ -14,10 +14,15 @@
 export default {
   props: {
     modelData: Array,
-    currentModelIndex: Number,
+    currentModelId: String,
   },
   data() {
     return {}
+  },
+  computed: {
+    currentModelIndex() {
+      return this.modelData.findIndex((x) => x.id === `${this.currentModelId}`)
+    },
   },
   methods: {
     handleClick() {

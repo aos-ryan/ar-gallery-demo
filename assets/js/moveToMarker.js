@@ -33,6 +33,7 @@ const moveToMarker = {
 
     const firstClickEvent = (e) => {
       document.dispatchEvent(new Event('bg-fade'))
+      this.bust.emit('currentModelChanged')
       this.bustZoomed = true
       // where is bust when clicked
       console.log('local position:', this.bust.object3D.position)

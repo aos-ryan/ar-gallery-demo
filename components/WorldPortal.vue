@@ -8,7 +8,7 @@
     <InfoModal
       v-if="bgFade"
       :modelData="modelData"
-      :currentModelIndex="currentModelIndex"
+      :currentModelId="currentModelId"
       @modelChange="handleModelChange"
     />
 
@@ -69,6 +69,7 @@
           :scale="model.scale"
           :zoomScale="model.zoomScale"
           :position="model.position"
+          :pointsOfInterest="model.markers"
         >
         </Models>
       </a-entity>
@@ -100,7 +101,7 @@ export default {
   data() {
     return {
       bgFade: false,
-      currentModelIndex: 0,
+      currentModelId: '',
       modelData: [
         // {
         //   id: 'zeus',
@@ -119,15 +120,35 @@ export default {
           scale: '5 5 5',
           zoomScale: '0.5 0.5 0.5',
           position: '-22 1 -10',
+          markers: [
+            {
+              position: '0.1 0.1 0.2',
+              text: 'This is a text marker',
+            },
+            // {
+            //   position: '0.1 0.2 0.2',
+            //   text: 'This is a second text marker',
+            // },
+          ],
         },
         {
           id: 'lady2',
           src: '/models/lady_bust.glb',
-          info: 'The bust portrays a lady of the Spanish high society of 1909.',
+          info: 'This is a duplicate of the bust portraying a lady of the Spanish high society of 1909.',
           rotation: '0 90 0',
           scale: '5 5 5',
           zoomScale: '0.5 0.5 0.5',
           position: '-22 1 -20',
+          markers: [
+            // {
+            //   position: '0.1 0.1 0.2',
+            //   text: 'This is a text marker',
+            // },
+            // {
+            //   position: '0.1 0.2 0.2',
+            //   text: 'This is a second text marker',
+            // },
+          ],
         },
       ],
     }
@@ -136,33 +157,14 @@ export default {
     doBgFade() {
       this.bgFade = !this.bgFade
     },
-    handleModelChange() {
-      // update the model index
-      if (this.currentModelIndex < this.modelData.length - 1) {
-        this.currentModelIndex += 1
-      } else {
-        this.currentModelIndex = 0
-      }
-      // force an update of the zoomBust model,
-      const bust = document.querySelector('#bust')
-      bust.setAttribute(
-        'gltf-model',
-        `${this.modelData[this.currentModelIndex].src}`
-      )
-      // include proper scale
-      bust.setAttribute(
-        'scale',
-        `${this.modelData[this.currentModelIndex].zoomScale}`
-      )
-      // include proper rotation
-      bust.setAttribute(
-        'rotation',
-        `${this.modelData[this.currentModelIndex].rotation}`
-      )
+    handleModelChange(event) {
+      // update the current model id
+      this.currentModelId = event.target.getAttribute('id')
     },
   },
   created() {
     document.addEventListener('bg-fade', this.doBgFade)
+    document.addEventListener('currentModelChanged', this.handleModelChange)
   },
 }
 </script>
