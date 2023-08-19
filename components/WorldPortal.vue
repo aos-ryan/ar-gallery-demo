@@ -125,10 +125,10 @@ export default {
               position: '0.1 0.1 0.2',
               text: 'This is a text marker',
             },
-            // {
-            //   position: '0.1 0.2 0.2',
-            //   text: 'This is a second text marker',
-            // },
+            {
+              position: '0.1 0.2 0.2',
+              text: 'This is a second text marker',
+            },
           ],
         },
         {
