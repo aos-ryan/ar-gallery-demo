@@ -27,6 +27,7 @@
         <a-entity
           v-for="(point, index) in this.pointsOfInterest"
           :position="`${point.position}`"
+          :key="index"
         >
           <div class="point visible">
             <div class="label">{{ index + 1 }}</div>

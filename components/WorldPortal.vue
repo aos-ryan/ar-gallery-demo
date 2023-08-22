@@ -62,6 +62,7 @@
         <!-- Busts / Models in scene -->
         <Models
           v-for="model in modelData"
+          :key="model.id"
           :id="model.id"
           :src="model.src"
           :info="model.info"
