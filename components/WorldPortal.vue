@@ -14,6 +14,7 @@
 
     <!-- Scene -->
     <a-scene
+      id="scene"
       light="defaultLightsEnabled: false"
       xrweb="allowedDevices: any; disableDefaultEnvironment: false; disableWorldTracking:false"
       xrextras-runtime-error
@@ -30,8 +31,13 @@
 
       <!-- Camera -->
       <a-camera id="camera" position="0 9 9" portal-camera>
-        <a-entity raycaster="objects: .bustMarker; far: 25"> </a-entity>
         <a-entity
+          id="light-raycaster"
+          raycaster="objects: .bustMarker; far: 25"
+        >
+        </a-entity>
+        <a-entity
+          id="objects-raycaster"
           cursor="fuse: false; rayOrigin: mouse;"
           raycaster="objects: .cantap"
         ></a-entity>

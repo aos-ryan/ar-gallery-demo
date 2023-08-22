@@ -28,8 +28,9 @@
           v-for="(point, index) in this.pointsOfInterest"
           :position="`${point.position}`"
           :key="index"
+          class="cantap"
         >
-          <div class="point visible">
+          <div class="point">
             <div class="label">{{ index + 1 }}</div>
             <div class="text">{{ point.text }}</div>
           </div>

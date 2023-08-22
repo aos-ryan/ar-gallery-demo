@@ -36,17 +36,20 @@ const moveToMarker = {
       this.bust.emit('currentModelChanged')
       this.bustZoomed = true
       // where is bust when clicked
-      console.log('local position:', this.bust.object3D.position)
-      console.log(
-        'world position:',
-        this.bust.object3D.getWorldPosition(new THREE.Vector3())
-      )
+      // console.log('local position:', this.bust.object3D.position)
+      // console.log(
+      //   'world position:',
+      //   this.bust.object3D.getWorldPosition(new THREE.Vector3())
+      // )
       // remove bust from its parent (pedestal entity) and attach to the scene element
       this.bust.sceneEl.object3D.attach(this.bust.object3D)
       // add rotate
       this.bust.setAttribute('rotate', '')
       // disable spotlight
       this.bust.removeAttribute('spotlight')
+
+      // add the points of interest
+      // this.bust.querySelector('#poiGroup').setAttribute('points', '')
       // remove the event after the first time the model is clicked
       this.bust.removeEventListener('click', firstClickEvent)
       // add the second click event which handles placing the modal back on the pedestal
