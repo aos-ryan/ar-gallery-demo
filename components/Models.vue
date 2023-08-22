@@ -25,12 +25,12 @@
     >
       <a-entity id="poiGroup" points>
         <a-entity
-          v-for="point in this.pointsOfInterest"
+          v-for="(point, index) in this.pointsOfInterest"
           :position="`${point.position}`"
         >
           <div class="point visible">
-            <div class="label">#</div>
-            <div class="text">Test text</div>
+            <div class="label">{{ index + 1 }}</div>
+            <div class="text">{{ point.text }}</div>
           </div>
         </a-entity>
       </a-entity>
